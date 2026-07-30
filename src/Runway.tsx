@@ -8,6 +8,7 @@ import {
   dateKey,
   formatMoney,
 } from "./dates";
+import type { Insight } from "./insights";
 import type { OneTimeExpense, RecurringExpense } from "./types";
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
   monthlyExpenses: RecurringExpense[];
   oneTimeExpenses: OneTimeExpense[];
   earnings: Record<string, number>;
+  headline: Insight | null;
   insightCount: number;
   urgentCount: number;
   onEarn: (dateKey: string, amount: number) => void;
@@ -33,6 +35,7 @@ export function Runway({
   monthlyExpenses,
   oneTimeExpenses,
   earnings,
+  headline,
   insightCount,
   urgentCount,
   onEarn,
@@ -70,13 +73,18 @@ export function Runway({
   return (
     <section className="calendar">
       <header className="calendar__header">
-        <h1>Runway Model</h1>
+        <div className="calendar__brand">
+          <h1>Runway</h1>
+          <p className="calendar__tagline">
+            For days you get paid — not months between paychecks
+          </p>
+        </div>
         <div className="calendar__end">
           <p className="calendar__cash">
             <span className="calendar__cash-label">
               {showHoveredCash
                 ? `Cash on ${format(hovered.day, "MMM d")}`
-                : "Cash Today"}
+                : "Cash today"}
             </span>
             <strong>
               {formatMoney(
@@ -89,7 +97,7 @@ export function Runway({
               type="button"
               className="btn btn--icon"
               onClick={() => setHelpOpen((open) => !open)}
-              aria-label="How to use Runway Model"
+              aria-label="How to use Runway"
               aria-expanded={helpOpen}
               title="Help"
             >
@@ -120,16 +128,21 @@ export function Runway({
                   aria-label="Close help"
                   onClick={() => setHelpOpen(false)}
                 />
-                <div className="calendar__help-panel" role="dialog" aria-label="About Runway Model">
+                <div
+                  className="calendar__help-panel"
+                  role="dialog"
+                  aria-label="About Runway"
+                >
                   <p>
-                    See what you can afford across the next two weeks. Log what
-                    you earn each day; bills light up when they’re due and flag
-                    if you’re short.
+                    Built for volatile, day-to-day income. Log each day’s pay,
+                    see which bills you can cover across the next two weeks, and
+                    get a daily earn target — not a monthly category budget.
                   </p>
                   <p>
-                    Use Insights for bill warnings and daily earn targets. The $
-                    button sets bank balance and monthly bills. Add one-off costs
-                    with + add expense. Hover a day to check cash on that date.
+                    Insights surface shortfalls, how many buffer days you have
+                    if work stops, and peer checks on controllable bills. The $
+                    button sets bank balance and recurring due dates. Hover a
+                    day to preview cash on that date.
                   </p>
                 </div>
               </>
@@ -198,6 +211,26 @@ export function Runway({
           </button>
         </div>
       </header>
+
+      {headline ? (
+        <button
+          type="button"
+          className={`calendar__status calendar__status--${headline.tone}`}
+          onClick={onOpenInsights}
+        >
+          <span className="calendar__status-kicker">
+            {headline.tone === "urgent"
+              ? "Act today"
+              : headline.tone === "action"
+                ? "Daily target"
+                : headline.tone === "peer"
+                  ? "Peer check"
+                  : "Runway"}
+          </span>
+          <span className="calendar__status-title">{headline.title}</span>
+          <span className="calendar__status-more">Insights →</span>
+        </button>
+      ) : null}
 
       <div className="calendar__grid">
         {dayStates.map((state, i) => (

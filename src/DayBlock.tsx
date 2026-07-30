@@ -232,7 +232,9 @@ export function DayBlock({
             aria-label={`Earnings for ${format(day, "MMMM d")}`}
           />
         </span>
-        <span className="day__earn-label">earned today</span>
+        <span className="day__earn-label">
+          {today ? "today’s pay" : past ? "earned" : "expected"}
+        </span>
       </div>
     </article>
   );

@@ -355,3 +355,12 @@ export function buildInsights(input: Input, from: Date = new Date()): Insight[] 
 export function urgentInsightCount(insights: Insight[]): number {
   return insights.filter((i) => i.tone === "urgent").length;
 }
+
+/** Top cash-flow insight for the runway header — what a daily earner should act on next. */
+export function primaryInsight(insights: Insight[]): Insight | null {
+  return (
+    insights.find((i) => i.tone === "urgent" || i.tone === "action") ??
+    insights[0] ??
+    null
+  );
+}

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { InsightsPanel } from "./InsightsPanel";
-import { buildInsights, urgentInsightCount } from "./insights";
+import {
+  buildInsights,
+  primaryInsight,
+  urgentInsightCount,
+} from "./insights";
 import { Runway } from "./Runway";
 import { SettingsPanel } from "./SettingsPanel";
 import { loadState, saveState, type PersistedState } from "./storage";
@@ -30,6 +34,7 @@ export default function App() {
           monthlyExpenses={state.monthlyExpenses}
           oneTimeExpenses={state.oneTimeExpenses}
           earnings={state.earnings}
+          headline={primaryInsight(insights)}
           insightCount={insights.length}
           urgentCount={urgentInsightCount(insights)}
           onEarn={(key, amount) =>

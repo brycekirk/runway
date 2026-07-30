@@ -96,7 +96,7 @@ export function SettingsPanel({
         onClick={(e) => e.stopPropagation()}
       >
         <header className="settings__head">
-          <h2 id={`${formId}-title`}>Money &amp; expenses</h2>
+          <h2 id={`${formId}-title`}>Bank &amp; due dates</h2>
           <button
             type="button"
             className="btn btn--ghost"
@@ -112,7 +112,7 @@ export function SettingsPanel({
 
         <form className="settings__form" onSubmit={handleSubmit}>
           <label className="field" htmlFor={`${formId}-balance`}>
-            <span className="field__label">Starting money in bank</span>
+            <span className="field__label">Cash in bank right now</span>
             <span className="field__wrap">
               <span className="field__prefix">$</span>
               <input
@@ -127,7 +127,9 @@ export function SettingsPanel({
             </span>
           </label>
 
-          <div className="settings__section-label">Monthly expenses</div>
+          <div className="settings__section-label">
+            Recurring bills (due day of month)
+          </div>
           <div className="settings__table-head" aria-hidden>
             <span>Name</span>
             <span>Amount</span>

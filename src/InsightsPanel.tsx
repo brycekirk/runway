@@ -149,7 +149,8 @@ export function InsightsPanel({ open, insights, onClose }: Props) {
           <div>
             <h2 id="insights-title">Insights</h2>
             <p className="insights__sub">
-              Cash-flow first, then fair peer checks on controllable bills.
+              What to earn today, how many buffer days you have if work stops,
+              then peer checks on controllable bills — not category budgets.
             </p>
           </div>
           <button
@@ -167,8 +168,8 @@ export function InsightsPanel({ open, insights, onClose }: Props) {
 
         {insights.length === 0 ? (
           <p className="insights__empty">
-            Log a few days of earnings and your bills will surface guidance
-            here.
+            Log a few days of pay and your next bill will surface a daily target
+            and buffer-day count here.
           </p>
         ) : (
           <ul className="insights__list">

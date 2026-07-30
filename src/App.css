@@ -63,11 +63,15 @@ button {
   position: relative;
   z-index: 50;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
   animation: rise 420ms var(--ease) both;
+}
+
+.calendar__brand {
+  min-width: 0;
 }
 
 .calendar__header h1 {
@@ -77,12 +81,101 @@ button {
   letter-spacing: -0.035em;
 }
 
+.calendar__tagline {
+  margin: 0.25rem 0 0;
+  max-width: 22rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.calendar__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  width: 100%;
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--cell);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms var(--ease),
+    background 160ms var(--ease),
+    transform 160ms var(--ease);
+  animation: rise 480ms var(--ease) both;
+}
+
+.calendar__status:hover {
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.calendar__status--urgent {
+  border-color: #f0b4ae;
+  background: var(--short-soft);
+}
+
+.calendar__status--action {
+  border-color: #b7d4c6;
+  background: var(--ok-soft);
+}
+
+.calendar__status--ok {
+  border-color: var(--line-strong);
+  background: var(--cell);
+}
+
+.calendar__status--peer {
+  border-color: var(--line-strong);
+  background: var(--bg);
+}
+
+.calendar__status-kicker {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.calendar__status--urgent .calendar__status-kicker {
+  color: var(--short);
+}
+
+.calendar__status--action .calendar__status-kicker {
+  color: var(--ok);
+}
+
+.calendar__status-title {
+  flex: 1 1 12rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+.calendar__status-more {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
 .calendar__end {
   display: flex;
   align-items: center;
   gap: 0.55rem;
   margin-left: auto;
   flex-shrink: 0;
+  padding-top: 0.15rem;
 }
 
 .calendar__cash {

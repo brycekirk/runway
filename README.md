@@ -1,32 +1,28 @@
-# React + TypeScript + Vite
+# Runway
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Budgeting for people who get paid **by the day** — gig workers, day labour, tips, shifts — not monthly salary envelopes.
 
-Currently, two official plugins are available:
+Typical budget apps ask: *where did this month’s money go?*  
+Daily earners need: **can I cover the next bill, and how much do I need to make today?**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## What we built (beyond money in / money out)
 
-## React Compiler
+| Typical budget | Runway |
+| --- | --- |
+| Monthly categories & leftover | **Day-by-day cash runway** (±7 days) |
+| Log income when it hits | **Log today’s pay** on the calendar |
+| “You’re over budget on dining” | **Bill shortfalls** when cash can’t cover a due date |
+| Emergency fund lectures | **Buffer days** — how long you last if earnings stop |
+| Vague “save more” tips | **Daily earn target** to clear upcoming obligations |
+| Peer spend shaming | **Peer checks only on controllable bills** (phone, streaming) — housing omitted |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Demo seed
 
-## Expanding the Oxlint configuration
+Opens with sample Alberta daily-earner data: volatile past pay, rent that can shortfall, and controllable peer benchmarks for Calgary.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Run
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
