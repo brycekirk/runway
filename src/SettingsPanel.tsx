@@ -43,6 +43,15 @@ export function SettingsPanel({
     );
   }, [open, startingBalance, expenses]);
 
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   function updateRow(id: string, patch: Partial<RecurringExpense>) {
@@ -82,10 +91,21 @@ export function SettingsPanel({
         aria-label="Close"
         onClick={onClose}
       />
-      <div className="settings__panel">
+      <div
+        className="settings__panel"
+        onClick={(e) => e.stopPropagation()}
+      >
         <header className="settings__head">
           <h2 id={`${formId}-title`}>Money &amp; expenses</h2>
-          <button type="button" className="btn btn--ghost" onClick={onClose}>
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onClose();
+            }}
+          >
             Close
           </button>
         </header>

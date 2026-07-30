@@ -70,7 +70,7 @@ export function Runway({
   return (
     <section className="calendar">
       <header className="calendar__header">
-        <h1>Runway</h1>
+        <h1>Runway Model</h1>
         <div className="calendar__end">
           <p className="calendar__cash">
             <span className="calendar__cash-label">
@@ -89,7 +89,7 @@ export function Runway({
               type="button"
               className="btn btn--icon"
               onClick={() => setHelpOpen((open) => !open)}
-              aria-label="How to use Runway"
+              aria-label="How to use Runway Model"
               aria-expanded={helpOpen}
               title="Help"
             >
@@ -120,7 +120,7 @@ export function Runway({
                   aria-label="Close help"
                   onClick={() => setHelpOpen(false)}
                 />
-                <div className="calendar__help-panel" role="dialog" aria-label="About Runway">
+                <div className="calendar__help-panel" role="dialog" aria-label="About Runway Model">
                   <p>
                     See what you can afford across the next two weeks. Log what
                     you earn each day; bills light up when they’re due and flag

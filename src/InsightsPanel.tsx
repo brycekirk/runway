@@ -1,4 +1,5 @@
-import type { Insight } from "./insights";
+import { useEffect } from "react";
+import type { Insight, InsightTone } from "./insights";
 
 type Props = {
   open: boolean;
@@ -6,14 +7,125 @@ type Props = {
   onClose: () => void;
 };
 
-const TONE_LABEL: Record<Insight["tone"], string> = {
+const TONE_LABEL: Record<InsightTone, string> = {
   urgent: "Urgent",
   action: "Action",
   peer: "Peers",
   ok: "On track",
 };
 
+function InsightIcon({ tone }: { tone: InsightTone }) {
+  switch (tone) {
+    case "urgent":
+      return (
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
+          <path
+            d="M12 3.6 21.2 20.1H2.8L12 3.6Z"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 10v4.2"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+            strokeLinecap="round"
+          />
+          <circle cx="12" cy="17.1" r="1.05" fill="currentColor" />
+        </svg>
+      );
+    case "action":
+      return (
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
+          <circle
+            cx="12"
+            cy="12"
+            r="8.25"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+          />
+          <path
+            d="M12 7.2v5.1l3.2 1.9"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    case "peer":
+      return (
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
+          <circle
+            cx="9"
+            cy="9"
+            r="3.1"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+          />
+          <circle
+            cx="16.2"
+            cy="10.2"
+            r="2.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+          />
+          <path
+            d="M3.6 18.4c.7-2.5 2.8-3.9 5.4-3.9s4.7 1.4 5.4 3.9"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+            strokeLinecap="round"
+          />
+          <path
+            d="M14.2 14.8c1.7-.35 3.5.25 4.5 1.85.45.7.7 1.45.8 2.15"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+            strokeLinecap="round"
+          />
+        </svg>
+      );
+    case "ok":
+      return (
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>
+          <circle
+            cx="12"
+            cy="12"
+            r="8.25"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+          />
+          <path
+            d="M8.2 12.2 10.8 14.8 15.8 9.4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.85"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+  }
+}
+
 export function InsightsPanel({ open, insights, onClose }: Props) {
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return (
@@ -29,7 +141,10 @@ export function InsightsPanel({ open, insights, onClose }: Props) {
         aria-label="Close"
         onClick={onClose}
       />
-      <div className="settings__panel insights__panel">
+      <div
+        className="settings__panel insights__panel"
+        onClick={(e) => e.stopPropagation()}
+      >
         <header className="settings__head">
           <div>
             <h2 id="insights-title">Insights</h2>
@@ -37,7 +152,15 @@ export function InsightsPanel({ open, insights, onClose }: Props) {
               Cash-flow first, then fair peer checks on controllable bills.
             </p>
           </div>
-          <button type="button" className="btn btn--ghost" onClick={onClose}>
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onClose();
+            }}
+          >
             Close
           </button>
         </header>
@@ -55,14 +178,21 @@ export function InsightsPanel({ open, insights, onClose }: Props) {
                 className={`insight insight--${insight.tone}`}
                 style={{ animationDelay: `${i * 40}ms` }}
               >
-                <div className="insight__top">
-                  <span className="insight__tone">{TONE_LABEL[insight.tone]}</span>
+                <span className="insight__icon" aria-hidden>
+                  <InsightIcon tone={insight.tone} />
+                </span>
+                <div className="insight__content">
+                  <div className="insight__top">
+                    <span className="insight__tone">
+                      {TONE_LABEL[insight.tone]}
+                    </span>
+                  </div>
+                  <h3 className="insight__title">{insight.title}</h3>
+                  <p className="insight__body">{insight.body}</p>
+                  {insight.detail ? (
+                    <p className="insight__detail">{insight.detail}</p>
+                  ) : null}
                 </div>
-                <h3 className="insight__title">{insight.title}</h3>
-                <p className="insight__body">{insight.body}</p>
-                {insight.detail ? (
-                  <p className="insight__detail">{insight.detail}</p>
-                ) : null}
               </li>
             ))}
           </ul>
